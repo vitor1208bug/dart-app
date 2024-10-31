@@ -1,35 +1,27 @@
-import 'dart:io';
-
-
+import 'dart:async'; // Import necessário para usar Future
 
 void main() {
+  print('Início do programa');
 
-  Set<String> caracter =  {};
-  int conte = 0;
+  // Chama a função que simula uma operação assíncrona
+  buscarDados().then((resultado) {
+    // Esse código será executado depois que o Future for concluído
+    print('Resultado: $resultado');
+  }).catchError((erro) {
+    // Se houver um erro, ele será capturado aqui
+    print('Erro: $erro');
+  });
 
-  stdout.write("escolha a letra  que você quer procurar\n");
+  print('Fim do programa');
+}
 
-  String?  letra = stdin.readLineSync();
+// Função que retorna um Future, simulando uma operação que demora (como buscar dados da internet)
+Future<String> buscarDados() {
+  print('Buscando dados...');
 
-  if(letra !=null && letra.length >= 1){
-    caracter.add(letra);
-    stdout.write("escreva a palavra\n");
-    String? palavra = stdin.readLineSync();
-    print(palavra!);
-
-    for(int i =0; i< palavra.length;i++){
-      if(caracter.contains(palavra[i])){
-        conte++;
-      }
-    }
-
-    if(conte == 0){
-      print("não encontramos nada");
-    }else{
-      print("encontramos na palavra ${palavra} ${conte} letras iguias");
-    }
-  }else{
-    print("so poe ter 1 letra");
-  }
-} 
-
+  // Aqui usamos Future.delayed para simular um tempo de espera de 2 segundos
+  return Future.delayed(Duration(seconds: 2), () {
+    // Essa função será executada depois de 2 segundos
+    return 'Dados recebidos com sucesso!';
+  });
+}
